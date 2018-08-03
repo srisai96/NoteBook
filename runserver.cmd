@@ -1,0 +1,3 @@
+C:\WinPy\python-2.7.10\python.exe "C:\Program Files (x86)\Google\google_appengine\dev_appserver.py" --skip_sdk_update_check=yes --port=10081 --admin_port=8002 "D:\SourceCodesAll\python\Training\nanodegree_stack\Project3-MultiUserBlog\blaggy\blaggy"
+
+ rem "C:\WinPy\python-2.7.10\python.exe" "C:\Program Files (x86)\Google\google_appengine\appcfg.py" update -A appstory-140311 "D:\SourceCodesAll\python\Training\nanodegree_stack\Project3-MultiUserBlog\blaggy\blaggy" --no_cookies

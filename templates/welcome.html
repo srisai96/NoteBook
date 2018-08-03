@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-3 well">
+        <h1>Trending Posts</h1>
+        <ul class="list-group">
+        {% for post in allposts %}
+            <li class="list-group-item text-center">
+            <a href="/blog/{{ post.key().id() }}">{{ post.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <br>
+        <h2 class="text-center">Welcome to Note Book. </h2>
+        <h3 class="text-center">Hi! {{user.name}}</h3>
+        <p>now you are all set to post your story.</p>
+        <a href="/blog/new" class="btn btn-primary ">Post a story</a>
+        <a href="/blog/user" class="btn btn-success">See your stories</a>
+        <a href="/blog/friends" class="btn btn-info">Add Friends</a>
+{#        <a href="/blog/friends" class="btn btn-primary btn-blog">Follower Callout's</a>#}
+
+    </div>
+    <div class="col-md-3 well">
+
+        <h2 class="text-center">Friends List </h2>
+        <ul class="list-group">
+        {% if friendscount!=0 %}
+            {% for i in range(0,friendscount) %}
+            <li class="text-center list-group-item"><a href="/blog/friends/{{ friendids[i] }}">{{ friendnames[i] }}</a></li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+        {% if friendscount==0 %}
+            <a href="/blog/friends"> <h3>you don't have any friends</h3> </a>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#<!-- #}
+{#<ol>#}
+{#    {% for x in range(1, n+1) %}#}
+{#        <li>#}
+{#            {% if x % 15 == 0 %}#}
+{#                FizzBuzz#}
+{#            {% elif x % 3 == 0 %}#}
+{#                Fizz#}
+{#            {% elif x % 5 == 0 %}#}
+{#                Buzz#}
+{#            {% else %}#}
+{#                {{ x }}#}
+{#            {% endif %}#}
+{#        </li> #}
+{#    {% endfor %}#}
+{#</ol> -->#}

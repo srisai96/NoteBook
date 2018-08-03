@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}All Users{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12 text-center">
+<form role="form" method="post" action="/blog/friends" >
+        <h1>People</h1>
+        {% for person in allusers %}
+            {% if person.name != currentuser.name %}
+                {%  if person.key().id() not in currentuser.friends %}
+                    <div>
+                    <div class="col-md-9">
+                        {{ person.name}}
+                        </div>
+                        <div class="col-md-3">
+                            <button name="addfriend"  value= "{{person.key().id()}}" class="btn btn-md btn-primary" type="submit">FOLLOW</button>
+                        </div>
+                        </div>
+                    <br>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+</form>
+    </div>
+</div>
+{% endblock %}

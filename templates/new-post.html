@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}New Post{% endblock %}
+
+{% block container %}
+
+<div class="row">
+    <div class="col-md-12 well">
+
+        <h2 class="form-signin-heading text-center">Add Your Callout</h2>
+    </div>
+</div>
+
+<div class="row well">
+    <div class="col-md-12">
+
+        <form id="blogPostFrom" role="form" action="/blog/new" method="post">
+            <h3>Title</h3>
+            <label for="title" class="sr-only">Title</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Blog Title" required autofocus>
+            <h3>Content</h3>
+            <textarea class="text_area" name="content" id="postContent" class="blog-content" form="blogPostFrom" wrap="soft"
+                      placeholder="post your callout here . . ."
+                      required></textarea>
+            <p class="errormsg">{{errormsg}}</p>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-lg btn-primary btn-var-width btn-left" type="submit">Post</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-lg btn-default btn-var-width btn-right" onclick="window.location.replace('/blog/all')" type="button">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

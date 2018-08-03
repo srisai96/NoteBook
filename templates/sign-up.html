@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block container %}
+<form class="form-signin" action="/signup" method="post">
+    <h2 class="form-signin-heading">Sign Up</h2>
+
+    <label for="userName" class="sr-only">User Name</label>
+    <input name="userName" type="text" id="userName" class="form-control" placeholder="username" required autofocus>
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="email@domain.com" required
+           autofocus>
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input name="pwd" type="password" id="inputPassword" class="form-control" placeholder="password" required>
+    <p class="errormsg">{{errormsg}}</p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+</form>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>Already registered? <a href="/signin">Login</a></p>
+    </div>
+</div>
+{% endblock %}

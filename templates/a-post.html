@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block editpost %}
+{% if showEdit %}
+<li>
+    <a href="/blog/{{post.key().id()}}/edit">
+        Edit this post
+    </a>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block container %}
+<div class="row panel panel-primary post">
+    <div class="row panel-heading post_header">
+        <div class="col-md-12">
+            <h1>{{post.title}}</h1>
+        </div>
+    </div>
+
+<!--showing content of the post-->
+    <div class="row panel-body">
+        <div class="col-md-12">
+            <p>{{post.get_content()|safe}}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2 text-center small">
+                <p class="author"><b>Posted by: {{post.get_author_name()}}</b></p>
+                <p class="date_time">On {{post.get_modified_time()}}</p>
+            </div>
+        </div>
+    </div>
+<!--portion for like/dislike button and comment-->
+
+
+<div class="row comment_section">
+    <div class="col-md-12 font-large">
+        <form role="form" action="/blog/{{post.key().id()}}" method="post" class="form-inline">
+            <button class="btn btn-primary" name="likeComment" type="submit" value="like">
+                Upvote <i class="icon-thumbs-up" aria-hidden="true"></i>
+            </button>
+            <p>{{post.get_likes_count()}}</p>
+            <button  class="btn btn-danger" name="dislikeComment" type="submit" value="dislike">
+               Downvote <i class="icon-thumbs-down" aria-hidden="true"></i>
+            </button>
+            {% if userSignedIn %}
+                <button class="btn btn-info" type="button" onclick="javascript:showCommentBox()">
+                   Comment <i class="icon-chat-alt-fill" aria-hidden="true"></i>
+                </button>
+                {% else %}
+                <p>Please sign in to like or post comments.</p>
+            {% endif %}
+        </form>
+    </div>
+</div>
+</div>
+<br/>
+
+<!--other comments-->
+<br/>
+
+{% for comm in post.get_comments_ordered() %}
+<div class="media ">
+    <div class="media-body">
+        <h4 class="media-heading">{{comm.author.name}}
+            <small>{{comm.get_modified_time()}}</small>
+            {% if current_user and comm.author.key() == current_user.key() %}
+            <span style="padding:2%;"></span>
+            <!--<button data-toggle="modal" data-target="#editCommentModal">-->
+            <button type="button" onclick="javascript:showEditCommentBox({{comm.key().id()}})">
+                <i class="icon-pencil-square-o" aria-hidden="true"></i>
+            </button>
+            <form role="form" action="/blog/{{post.key().id()}}" method="post" class="form-inline">
+                <button name="deleteComment" value="{{comm.key().id()}}" type="submit"
+                        onclick="return confirm('Are you sure you want to delete this comment?');">
+                    <i class="icon-bin2" aria-hidden="true"></i>
+                </button>
+            </form>
+            {% endif %}
+        </h4>
+        <p id="cmnt_{{comm.key().id()}}">
+            {{comm.get_content()|safe}}
+        </p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block containOuter %}
+<!--modals-->
+<div id="commentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="cmntModalTitle">Title</h4>
+            </div>
+            <div class="modal-body">
+                <form id="commentForm" role="form" action="/blog/{{post.key().id()}}" method="post">
+                    <div class="form-group">
+                    <textarea
+                            id="cmntContentTA"
+                            name="content"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Post your comments here. . ."
+                            required
+                            autofocus>
+                    </textarea>
+                    </div>
+                    <button id="commentBtn" name="commentBtn" value="comment" type="submit" class="btn btn-primary">
+                        Comment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customScript %}
+<script type="text/javascript">
+function showEditCommentBox(cmntid)
+{
+   $('#cmntModalTitle').text('Update your comment')
+   $('#commentBtn').text('Update');
+   $('#commentBtn').val(cmntid);
+   var cmntTextElemId = '#cmnt_' + cmntid;
+   $('#cmntContentTA').val($.trim($(cmntTextElemId).html()));
+   $('#commentModal').modal('show');
+}
+function showCommentBox()
+{
+   $('#cmntModalTitle').text('Post your comment')
+   $('#commentBtn').text('Comment');
+   $('#commentBtn').val('comment');
+   // clear out text area
+   $('#cmntContentTA').val("");
+   $('#commentModal').modal('show');
+}
+
+</script>
+{% endblock %}

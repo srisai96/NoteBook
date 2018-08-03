@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Stories{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>Note Book</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col=md-12">
+        <hr/>
+    </div>
+</div>
+    {% if length!= 0 %}
+        {% for post in posts %}
+            <div class="panel panel-primary">
+                <div class="row panel-heading panel_header">
+                    <div class="col-md-9 text-left">
+                        <a href="{{post.get_perma_link()}}"><h1>{{post.title}}</h1></a>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <h5>Author: {{post.get_author_name()}}</h5>
+                        <h6>{{post.get_modified_time()}}</h6>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12 text-left">
+                        <p>{{post.get_content(True)|safe}}<a href="{{post.get_perma_link()}}">...</a></p>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        {% endfor %}
+    {% endif %}
+
+    {% if length==0 %}
+        <h1>You don't have any posts yet!!!</h1>
+        <a href="/blog/new"><h2>create your first post??</h2> </a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Sign-in{% endblock %}
+
+{% block container %}
+<form class="form-signin" action="/signin" method="post">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input name="userName" type="text" id="inputEmail" class="form-control" placeholder="username" required
+           autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input name="pwd" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <div class="checkbox">
+        <label>
+            <input name="rememberMe" type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <p class="errormsg">{{errormsg}}</p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>New to blog? <a href="/signup">Signup</a></p>
+    </div>
+</div>
+{% endblock %}
